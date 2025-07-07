@@ -1,0 +1,193 @@
+---
+title: "Software Engineering Topics"
+subtitle: "Merck R&D, August 2024"
+author: "Daniel Sabanés Bové"
+institute: RCONIS
+license: 'CC BY-SA'
+format: 
+  revealjs: 
+    incremental: false
+    logo: resources/RCONIS_logo.png
+    slide-number: c/t
+    fontsize: 24pt
+    footer: 'Software Engineering Topics | [License](http://creativecommons.org/licenses/by-sa/4.0/ "License: CC BY-SA 4.0")'
+title-slide-attributes: 
+  data-background-image: resources/RCONIS_logo.png
+  data-background-size: 20%
+  data-background-position: 90% 90%
+---
+
+```{r}
+#| include: false
+NULL
+```
+
+## Agenda
+
+-   Personal introduction
+-   Defensive programming
+-   Code optimization
+-   Shiny development
+-   Using LLMs
+
+# Personal introduction
+
+## Daniel
+
+::: columns
+::: {.column width="30%"}
+![](resources/daniel.jpg)
+:::
+
+::: {.column width="70%"}
+-   Ph.D. in Statistics from University of Zurich, Bayesian Model Selection
+-   Biostatistician at Roche for 5 years, Data Scientist at Google for 2 years, Statistical Software Engineer at Roche for 4 years
+-   Co-founder of [RCONIS](https://rconis.com) - we just had our 1st birthday!
+-   Multiple R packages on CRAN and Bioconductor, co-wrote book on Likelihood and Bayesian Inference, chair of `openstatsware`
+-   Feel free to connect
+   [`r fontawesome::fa("linkedin")`](https://www.linkedin.com/in/danielsabanesbove/)
+   [`r fontawesome::fa("github")`](https://github.com/danielinteractive)
+   [`r fontawesome::fa("globe")`](https://rconis.com)
+:::
+:::
+
+## RCONIS
+
+![](resources/rconis_team.jpg){.center}
+
+## Idea
+
+- Grow RPACT company to offer a wider range of services
+- Strengthen maintainer team for the `rpact` package
+- Team growth combined with scope growth 
+- Statistical consulting and engineering services:\
+  *R*esearch *Con*sulting and *I*nnovative *S*olutions
+- Website: [rconis.com](https://rconis.com)
+
+# Defensive programming
+
+## Type assertions
+
+- Recommendation: Enforce types and other expected properties of function arguments with **assertions**.
+- Assertions give an early and readable error message to the user instead of failing function code downstream in a less explicable way.
+- Main reason is of course that R is not a strongly typed language, so we need to enforce types ourselves.
+
+## Type assertions: packages
+
+- `assertthat`: simple assertions, e.g. `assert_that(is.numeric(x))`
+  - part of the `tidyverse` and written by Hadley Wickham
+  - last CRAN update was 2019, so is not actively maintained
+- `checkmate`: more powerful assertions, e.g. `assert_numeric(x, lower = 0, upper = 1)`
+  - very fast due to underlying C implementation 
+  - easy to extend with custom assertions
+  - also has the `expect_*` verbs for extending `testthat` functionality
+  - little disadvantage: does not easily allow custom error messages
+  - see [vignette](https://cran.r-project.org/web/packages/checkmate/vignettes/checkmate.html) for details
+  - has been my personal choice for a few years now
+
+## Type documentation
+
+- Going hand in hand with type assertions is type documentation.
+- Recommendation: Use consistent **type hints** or types in the `roxygen2` documentation to explain to the user which argument of the function expects which type of input.
+- Simple example (formatting can be tuned to personal preference):
+  ```r
+  #' @param x (`numeric`)\cr coordinates.
+  ```
+- Is shorter and more consistent than:
+  ```r
+  #' @param x numeric vector of coordinates.
+  ```
+
+## Type documentation (cont'd)
+
+- In addition to standard types like `numeric`, `character`, `integer`, etc.
+- You can also use more complex types like `data.frame`, `list`, and custom package classes.
+- Plus I recommend to use `number` (scalar numeric), `string` (scalar character), `flag` (scalar logical), etc. because these have corresponding `checkmate` assertions, e.g. `assert_number(x)`
+
+## Type documentation with `roxytypes`
+
+- Provides typed parameter documentation tags for integration with `roxygen2`. 
+- Typed parameter tags provide a consistent interface for annotating expected types for parameters and returned values.
+- Example:
+  ```r
+  #' @typed x: numeric
+  #'   coordinates.
+  #' @typedreturn: number
+  #'   Average coordinate.
+  ```
+- Output format in the `.md` file can be configured centrally in the `DESCRIPTION` file, e.g.:
+  ``Config/roxytypes: list(format = "(`{type}`)\cr {description}")``
+- Conversion utility to convert existing `roxygen2` documentation to typed parameter tags.
+
+## Error handling
+
+- Recommendation: Use `tryCatch()` sparsely only, and only for specific expected errors.
+- Otherwise debugging becomes more difficult
+  - I found myself manually disabling such statements via `fixInNamespace()` to be able to debug the code successfully
+- Basic `stop()` and `warning()` functions are sufficient for most use cases
+- Use `message()` very sparingly, as usually R packages should not be too verbose during normal operation
+
+## Corresponding tests
+
+- Recommendation: Write tests for error and warning handling, but not for type assertions.
+- Use specific enough expectations to ensure that the correct error or warning is thrown.
+- Example:
+  ```r
+  test_that("error is thrown for invalid input", {
+    expect_error(my_function("invalid input"), "Invalid input")
+  })
+  ```
+- Type assertions are evaluated in every function call, and should be code reviewed in combination with their documentation. Testing them separately would cause too much overhead.
+
+# Code optimization
+
+Please see [here](https://rconis.github.io/workshop-r-swe-zrh/slides/08_optimization.html)
+
+# Shiny development
+
+Please see [here](https://rconis.github.io/workshop-r-swe-zrh/slides/07_shiny.html)
+
+# Using LLMs
+
+## What LLMs did I use so far
+
+- ChatGPT (OpenAI) for general purpose tasks
+  - travel planning
+  - understanding legal terms
+  - deciphering linker symbols in C code
+- GitHub Co-Pilot (Microsoft) mostly in VScode
+  - now mostly with Claude Sonnet 3.7 (Anthropic)
+  - tab-completion in Quarto docs and R or C++
+  - pointer Q&A ("Ask Copilot")
+  - chat window for more general questions  
+- Google Search results via Gemini
+
+## Where I found LLMs useful
+
+- Applied statistical analyses reports
+  - Read data, summarize hypotheses, fit models, generate `ggplot2` plots, write conclusion
+  - Important: Write what you think into your Quarto doc, only then the LLM has a chance to understand the context and help you best
+- Very precise code generation, e.g. "I have this string and want to deparse it into ... please give me the function code"
+- Image recognition from math formula screenshots to generate LaTeX code
+- GitHub Co-Pilot code review to find small problems incl. typos
+
+## Where I was disappointed by LLMs
+
+- Translating code from one language to another
+  - e.g. R to Julia 
+- Anything that requires logic or math skills
+  - e.g. find the inverse of a function
+- Writing tests for existing code
+- Generating slides or posters
+
+## Good news: We are still needed!
+
+- Statisticians and software engineers cannot be replaced by LLMs
+  - High level context and communication with other team members
+  - Both in the clinical trial space but also for the code base
+  - Logical and analytical skills which LLMs just do not have
+  - Can in turn leverage LLMs for routine tasks to be more productive
+
+## Thank you! Questions?
+
+![](resources/RCONIS_logo.png){height="500"}

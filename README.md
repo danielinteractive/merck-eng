@@ -1,2 +1,1 @@
-# merck-eng
-Additional software engineering topics for my Merck visit
+Additional software engineering topics for my Merck visit.

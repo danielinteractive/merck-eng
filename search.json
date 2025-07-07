@@ -1,0 +1,114 @@
+[
+  {
+    "objectID": "index.html#agenda",
+    "href": "index.html#agenda",
+    "title": "Software Engineering Topics",
+    "section": "Agenda",
+    "text": "Agenda\n\nPersonal introduction\nDefensive programming\nCode optimization\nShiny development\nUsing LLMs"
+  },
+  {
+    "objectID": "index.html#daniel",
+    "href": "index.html#daniel",
+    "title": "Software Engineering Topics",
+    "section": "Daniel",
+    "text": "Daniel\n\n\n\n\n\nPh.D. in Statistics from University of Zurich, Bayesian Model Selection\nBiostatistician at Roche for 5 years, Data Scientist at Google for 2 years, Statistical Software Engineer at Roche for 4 years\nCo-founder of RCONIS - we just had our 1st birthday!\nMultiple R packages on CRAN and Bioconductor, co-wrote book on Likelihood and Bayesian Inference, chair of openstatsware\nFeel free to connect"
+  },
+  {
+    "objectID": "index.html#rconis",
+    "href": "index.html#rconis",
+    "title": "Software Engineering Topics",
+    "section": "RCONIS",
+    "text": "RCONIS"
+  },
+  {
+    "objectID": "index.html#idea",
+    "href": "index.html#idea",
+    "title": "Software Engineering Topics",
+    "section": "Idea",
+    "text": "Idea\n\nGrow RPACT company to offer a wider range of services\nStrengthen maintainer team for the rpact package\nTeam growth combined with scope growth\nStatistical consulting and engineering services:\nResearch Consulting and Innovative Solutions\nWebsite: rconis.com"
+  },
+  {
+    "objectID": "index.html#type-assertions",
+    "href": "index.html#type-assertions",
+    "title": "Software Engineering Topics",
+    "section": "Type assertions",
+    "text": "Type assertions\n\nRecommendation: Enforce types and other expected properties of function arguments with assertions.\nAssertions give an early and readable error message to the user instead of failing function code downstream in a less explicable way.\nMain reason is of course that R is not a strongly typed language, so we need to enforce types ourselves."
+  },
+  {
+    "objectID": "index.html#type-assertions-packages",
+    "href": "index.html#type-assertions-packages",
+    "title": "Software Engineering Topics",
+    "section": "Type assertions: packages",
+    "text": "Type assertions: packages\n\nassertthat: simple assertions, e.g. assert_that(is.numeric(x))\n\npart of the tidyverse and written by Hadley Wickham\nlast CRAN update was 2019, so is not actively maintained\n\ncheckmate: more powerful assertions, e.g. assert_numeric(x, lower = 0, upper = 1)\n\nvery fast due to underlying C implementation\neasy to extend with custom assertions\nalso has the expect_* verbs for extending testthat functionality\nlittle disadvantage: does not easily allow custom error messages\nsee vignette for details\nhas been my personal choice for a few years now"
+  },
+  {
+    "objectID": "index.html#type-documentation",
+    "href": "index.html#type-documentation",
+    "title": "Software Engineering Topics",
+    "section": "Type documentation",
+    "text": "Type documentation\n\nGoing hand in hand with type assertions is type documentation.\nRecommendation: Use consistent type hints or types in the roxygen2 documentation to explain to the user which argument of the function expects which type of input.\nSimple example (formatting can be tuned to personal preference):\n#' @param x (`numeric`)\\cr coordinates.\nIs shorter and more consistent than:\n#' @param x numeric vector of coordinates."
+  },
+  {
+    "objectID": "index.html#type-documentation-contd",
+    "href": "index.html#type-documentation-contd",
+    "title": "Software Engineering Topics",
+    "section": "Type documentation (cont’d)",
+    "text": "Type documentation (cont’d)\n\nIn addition to standard types like numeric, character, integer, etc.\nYou can also use more complex types like data.frame, list, and custom package classes.\nPlus I recommend to use number (scalar numeric), string (scalar character), flag (scalar logical), etc. because these have corresponding checkmate assertions, e.g. assert_number(x)"
+  },
+  {
+    "objectID": "index.html#type-documentation-with-roxytypes",
+    "href": "index.html#type-documentation-with-roxytypes",
+    "title": "Software Engineering Topics",
+    "section": "Type documentation with roxytypes",
+    "text": "Type documentation with roxytypes\n\nProvides typed parameter documentation tags for integration with roxygen2.\nTyped parameter tags provide a consistent interface for annotating expected types for parameters and returned values.\nExample:\n#' @typed x: numeric\n#'   coordinates.\n#' @typedreturn: number\n#'   Average coordinate.\nOutput format in the .md file can be configured centrally in the DESCRIPTION file, e.g.: Config/roxytypes: list(format = \"(`{type}`)\\cr {description}\")\nConversion utility to convert existing roxygen2 documentation to typed parameter tags."
+  },
+  {
+    "objectID": "index.html#error-handling",
+    "href": "index.html#error-handling",
+    "title": "Software Engineering Topics",
+    "section": "Error handling",
+    "text": "Error handling\n\nRecommendation: Use tryCatch() sparsely only, and only for specific expected errors.\nOtherwise debugging becomes more difficult\n\nI found myself manually disabling such statements via fixInNamespace() to be able to debug the code successfully\n\nBasic stop() and warning() functions are sufficient for most use cases\nUse message() very sparingly, as usually R packages should not be too verbose during normal operation"
+  },
+  {
+    "objectID": "index.html#corresponding-tests",
+    "href": "index.html#corresponding-tests",
+    "title": "Software Engineering Topics",
+    "section": "Corresponding tests",
+    "text": "Corresponding tests\n\nRecommendation: Write tests for error and warning handling, but not for type assertions.\nUse specific enough expectations to ensure that the correct error or warning is thrown.\nExample:\ntest_that(\"error is thrown for invalid input\", {\n  expect_error(my_function(\"invalid input\"), \"Invalid input\")\n})\nType assertions are evaluated in every function call, and should be code reviewed in combination with their documentation. Testing them separately would cause too much overhead."
+  },
+  {
+    "objectID": "index.html#what-llms-did-i-use-so-far",
+    "href": "index.html#what-llms-did-i-use-so-far",
+    "title": "Software Engineering Topics",
+    "section": "What LLMs did I use so far",
+    "text": "What LLMs did I use so far\n\nChatGPT (OpenAI) for general purpose tasks\n\ntravel planning\nunderstanding legal terms\ndeciphering linker symbols in C code\n\nGitHub Co-Pilot (Microsoft) mostly in VScode\n\nnow mostly with Claude Sonnet 3.7 (Anthropic)\ntab-completion in Quarto docs and R or C++\npointer Q&A (“Ask Copilot”)\nchat window for more general questions\n\n\nGoogle Search results via Gemini"
+  },
+  {
+    "objectID": "index.html#where-i-found-llms-useful",
+    "href": "index.html#where-i-found-llms-useful",
+    "title": "Software Engineering Topics",
+    "section": "Where I found LLMs useful",
+    "text": "Where I found LLMs useful\n\nApplied statistical analyses reports\n\nRead data, summarize hypotheses, fit models, generate ggplot2 plots, write conclusion\nImportant: Write what you think into your Quarto doc, only then the LLM has a chance to understand the context and help you best\n\nVery precise code generation, e.g. “I have this string and want to deparse it into … please give me the function code”\nImage recognition from math formula screenshots to generate LaTeX code\nGitHub Co-Pilot code review to find small problems incl. typos"
+  },
+  {
+    "objectID": "index.html#where-i-was-disappointed-by-llms",
+    "href": "index.html#where-i-was-disappointed-by-llms",
+    "title": "Software Engineering Topics",
+    "section": "Where I was disappointed by LLMs",
+    "text": "Where I was disappointed by LLMs\n\nTranslating code from one language to another\n\ne.g. R to Julia\n\nAnything that requires logic or math skills\n\ne.g. find the inverse of a function\n\nWriting tests for existing code\nGenerating slides or posters"
+  },
+  {
+    "objectID": "index.html#good-news-we-are-still-needed",
+    "href": "index.html#good-news-we-are-still-needed",
+    "title": "Software Engineering Topics",
+    "section": "Good news: We are still needed!",
+    "text": "Good news: We are still needed!\n\nStatisticians and software engineers cannot be replaced by LLMs\n\nHigh level context and communication with other team members\nBoth in the clinical trial space but also for the code base\nLogical and analytical skills which LLMs just do not have\nCan in turn leverage LLMs for routine tasks to be more productive"
+  },
+  {
+    "objectID": "index.html#thank-you-questions",
+    "href": "index.html#thank-you-questions",
+    "title": "Software Engineering Topics",
+    "section": "Thank you! Questions?",
+    "text": "Thank you! Questions?"
+  }
+]

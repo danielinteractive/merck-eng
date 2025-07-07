@@ -179,6 +179,7 @@ Please see [here](https://rconis.github.io/workshop-r-swe-zrh/slides/07_shiny.ht
   - e.g. find the inverse of a function
 - Writing tests for existing code
 - Generating slides or posters
+- Finding literature references
 
 ## Good news: We are still needed!
 

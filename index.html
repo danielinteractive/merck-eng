@@ -194,7 +194,7 @@
 
 <section id="title-slide" data-background-image="resources/RCONIS_logo.png" data-background-position="90% 90%" data-background-size="20%" class="quarto-title-block center">
   <h1 class="title">Software Engineering Topics</h1>
-  <p class="subtitle">Merck R&amp;D, August 2024</p>
+  <p class="subtitle">Merck &amp; Co., Inc., August 2024</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -262,6 +262,7 @@ Daniel Sabanés Bové
 <h2>Type assertions</h2>
 <ul>
 <li>Recommendation: Enforce types and other expected properties of function arguments with <strong>assertions</strong>.</li>
+<li>Reason: A good proportion of production bugs in the context of larger team collaborations originate from under-defined types or invalid inputs.</li>
 <li>Assertions give an early and readable error message to the user instead of failing function code downstream in a less explicable way.</li>
 <li>Main reason is of course that R is not a strongly typed language, so we need to enforce types ourselves.</li>
 </ul>
@@ -283,6 +284,7 @@ Daniel Sabanés Bové
 <li>see <a href="https://cran.r-project.org/web/packages/checkmate/vignettes/checkmate.html">vignette</a> for details</li>
 <li>has been my personal choice for a few years now</li>
 </ul></li>
+<li>In Python: <a href="https://docs.pydantic.dev/"><code>Pydantic</code></a> helps verify input data coming into fully type annotated Python programs.</li>
 </ul>
 </section>
 <section id="type-documentation" class="slide level2">
@@ -321,7 +323,19 @@ Daniel Sabanés Bové
 <section id="error-handling" class="slide level2">
 <h2>Error handling</h2>
 <ul>
-<li>Recommendation: Use <code>tryCatch()</code> sparsely only, and only for specific expected errors.</li>
+<li>Recommendation: Use <code>tryCatch()</code> sparsely only, and only for specific expected errors.
+<ul>
+<li>Example:</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">tryCatch</span>({</span>
+<span id="cb4-2"><a></a>  <span class="co"># code that might throw an error</span></span>
+<span id="cb4-3"><a></a>}, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb4-4"><a></a>  <span class="cf">if</span> (e<span class="sc">$</span>message <span class="sc">==</span> <span class="st">"specific error message"</span>) {</span>
+<span id="cb4-5"><a></a>    <span class="co"># handle specific error</span></span>
+<span id="cb4-6"><a></a>  } <span class="cf">else</span> {</span>
+<span id="cb4-7"><a></a>    <span class="fu">stop</span>(e)  <span class="co"># re-throw other errors</span></span>
+<span id="cb4-8"><a></a>  }</span>
+<span id="cb4-9"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li>Otherwise debugging becomes more difficult
 <ul>
 <li>I found myself manually disabling such statements via <code>fixInNamespace()</code> to be able to debug the code successfully</li>
@@ -336,9 +350,9 @@ Daniel Sabanés Bové
 <li><p>Recommendation: Write tests for error and warning handling, but not for type assertions.</p></li>
 <li><p>Use specific enough expectations to ensure that the correct error or warning is thrown.</p></li>
 <li><p>Example:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">test_that</span>(<span class="st">"error is thrown for invalid input"</span>, {</span>
-<span id="cb4-2"><a></a>  <span class="fu">expect_error</span>(<span class="fu">my_function</span>(<span class="st">"invalid input"</span>), <span class="st">"Invalid input"</span>)</span>
-<span id="cb4-3"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">test_that</span>(<span class="st">"error is thrown for invalid input"</span>, {</span>
+<span id="cb5-2"><a></a>  <span class="fu">expect_error</span>(<span class="fu">my_function</span>(<span class="st">"invalid input"</span>), <span class="st">"Invalid input"</span>)</span>
+<span id="cb5-3"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Type assertions are evaluated in every function call, and should be code reviewed in combination with their documentation. Testing them separately would cause too much overhead.</p></li>
 </ul>
 </section></section>

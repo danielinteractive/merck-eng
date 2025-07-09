@@ -32,14 +32,14 @@
     "href": "index.html#type-assertions",
     "title": "Software Engineering Topics",
     "section": "Type assertions",
-    "text": "Type assertions\n\nRecommendation: Enforce types and other expected properties of function arguments with assertions.\nAssertions give an early and readable error message to the user instead of failing function code downstream in a less explicable way.\nMain reason is of course that R is not a strongly typed language, so we need to enforce types ourselves."
+    "text": "Type assertions\n\nRecommendation: Enforce types and other expected properties of function arguments with assertions.\nReason: A good proportion of production bugs in the context of larger team collaborations originate from under-defined types or invalid inputs.\nAssertions give an early and readable error message to the user instead of failing function code downstream in a less explicable way.\nMain reason is of course that R is not a strongly typed language, so we need to enforce types ourselves."
   },
   {
     "objectID": "index.html#type-assertions-packages",
     "href": "index.html#type-assertions-packages",
     "title": "Software Engineering Topics",
     "section": "Type assertions: packages",
-    "text": "Type assertions: packages\n\nassertthat: simple assertions, e.g. assert_that(is.numeric(x))\n\npart of the tidyverse and written by Hadley Wickham\nlast CRAN update was 2019, so is not actively maintained\n\ncheckmate: more powerful assertions, e.g. assert_numeric(x, lower = 0, upper = 1)\n\nvery fast due to underlying C implementation\neasy to extend with custom assertions\nalso has the expect_* verbs for extending testthat functionality\nlittle disadvantage: does not easily allow custom error messages\nsee vignette for details\nhas been my personal choice for a few years now"
+    "text": "Type assertions: packages\n\nassertthat: simple assertions, e.g. assert_that(is.numeric(x))\n\npart of the tidyverse and written by Hadley Wickham\nlast CRAN update was 2019, so is not actively maintained\n\ncheckmate: more powerful assertions, e.g. assert_numeric(x, lower = 0, upper = 1)\n\nvery fast due to underlying C implementation\neasy to extend with custom assertions\nalso has the expect_* verbs for extending testthat functionality\nlittle disadvantage: does not easily allow custom error messages\nsee vignette for details\nhas been my personal choice for a few years now\n\nIn Python: Pydantic helps verify input data coming into fully type annotated Python programs."
   },
   {
     "objectID": "index.html#type-documentation",
@@ -67,7 +67,7 @@
     "href": "index.html#error-handling",
     "title": "Software Engineering Topics",
     "section": "Error handling",
-    "text": "Error handling\n\nRecommendation: Use tryCatch() sparsely only, and only for specific expected errors.\nOtherwise debugging becomes more difficult\n\nI found myself manually disabling such statements via fixInNamespace() to be able to debug the code successfully\n\nBasic stop() and warning() functions are sufficient for most use cases\nUse message() very sparingly, as usually R packages should not be too verbose during normal operation"
+    "text": "Error handling\n\nRecommendation: Use tryCatch() sparsely only, and only for specific expected errors.\n\nExample:\n\ntryCatch({\n  # code that might throw an error\n}, error = function(e) {\n  if (e$message == \"specific error message\") {\n    # handle specific error\n  } else {\n    stop(e)  # re-throw other errors\n  }\n})\nOtherwise debugging becomes more difficult\n\nI found myself manually disabling such statements via fixInNamespace() to be able to debug the code successfully\n\nBasic stop() and warning() functions are sufficient for most use cases\nUse message() very sparingly, as usually R packages should not be too verbose during normal operation"
   },
   {
     "objectID": "index.html#corresponding-tests",

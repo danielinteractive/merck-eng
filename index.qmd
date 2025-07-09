@@ -1,6 +1,6 @@
 ---
 title: "Software Engineering Topics"
-subtitle: "Merck R&D, August 2024"
+subtitle: "Merck & Co., Inc., August 2024"
 author: "Daniel Sabanés Bové"
 institute: RCONIS
 license: 'CC BY-SA'
@@ -69,6 +69,7 @@ NULL
 ## Type assertions
 
 - Recommendation: Enforce types and other expected properties of function arguments with **assertions**.
+- Reason: A good proportion of production bugs in the context of larger team collaborations originate from under-defined types or invalid inputs. 
 - Assertions give an early and readable error message to the user instead of failing function code downstream in a less explicable way.
 - Main reason is of course that R is not a strongly typed language, so we need to enforce types ourselves.
 
@@ -84,6 +85,7 @@ NULL
   - little disadvantage: does not easily allow custom error messages
   - see [vignette](https://cran.r-project.org/web/packages/checkmate/vignettes/checkmate.html) for details
   - has been my personal choice for a few years now
+- In Python: [`Pydantic`](https://docs.pydantic.dev/) helps verify input data coming into fully type annotated Python programs.
 
 ## Type documentation
 
@@ -122,6 +124,18 @@ NULL
 ## Error handling
 
 - Recommendation: Use `tryCatch()` sparsely only, and only for specific expected errors.
+  - Example: 
+  ```r
+  tryCatch({
+    # code that might throw an error
+  }, error = function(e) {
+    if (e$message == "specific error message") {
+      # handle specific error
+    } else {
+      stop(e)  # re-throw other errors
+    }
+  })
+  ```
 - Otherwise debugging becomes more difficult
   - I found myself manually disabling such statements via `fixInNamespace()` to be able to debug the code successfully
 - Basic `stop()` and `warning()` functions are sufficient for most use cases

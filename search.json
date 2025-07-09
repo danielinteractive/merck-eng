@@ -42,6 +42,13 @@
     "text": "Type assertions: packages\n\nassertthat: simple assertions, e.g. assert_that(is.numeric(x))\n\npart of the tidyverse and written by Hadley Wickham\nlast CRAN update was 2019, so is not actively maintained\n\ncheckmate: more powerful assertions, e.g. assert_numeric(x, lower = 0, upper = 1)\n\nvery fast due to underlying C implementation\neasy to extend with custom assertions\nalso has the expect_* verbs for extending testthat functionality\nlittle disadvantage: does not easily allow custom error messages\nsee vignette for details\nhas been my personal choice for a few years now\n\nIn Python: Pydantic helps verify input data coming into fully type annotated Python programs."
   },
   {
+    "objectID": "index.html#type-assertions-packages-contd",
+    "href": "index.html#type-assertions-packages-contd",
+    "title": "Software Engineering Topics",
+    "section": "Type assertions: packages (cont’d)",
+    "text": "Type assertions: packages (cont’d)\n\nIn Python: Pydantic helps verify input data coming into fully type annotated Python programs."
+  },
+  {
     "objectID": "index.html#type-documentation",
     "href": "index.html#type-documentation",
     "title": "Software Engineering Topics",
@@ -67,7 +74,14 @@
     "href": "index.html#error-handling",
     "title": "Software Engineering Topics",
     "section": "Error handling",
-    "text": "Error handling\n\nRecommendation: Use tryCatch() sparsely only, and only for specific expected errors.\n\nExample:\n\ntryCatch({\n  # code that might throw an error\n}, error = function(e) {\n  if (e$message == \"specific error message\") {\n    # handle specific error\n  } else {\n    stop(e)  # re-throw other errors\n  }\n})\nOtherwise debugging becomes more difficult\n\nI found myself manually disabling such statements via fixInNamespace() to be able to debug the code successfully\n\nBasic stop() and warning() functions are sufficient for most use cases\nUse message() very sparingly, as usually R packages should not be too verbose during normal operation"
+    "text": "Error handling\n\nRecommendation: Use tryCatch() sparsely only, and only for specific expected errors.\n\nExample:\n\ntryCatch({\n  # code that might throw an error\n}, error = function(e) {\n  if (e$message == \"specific error message\") {\n    # handle specific error\n  } else {\n    stop(e)  # re-throw other errors\n  }\n})\nOtherwise debugging becomes more difficult\n\nI found myself manually disabling such statements via fixInNamespace() to be able to debug the code successfully"
+  },
+  {
+    "objectID": "index.html#error-handling-contd",
+    "href": "index.html#error-handling-contd",
+    "title": "Software Engineering Topics",
+    "section": "Error handling (cont’d)",
+    "text": "Error handling (cont’d)\n\nBasic stop() and warning() functions are sufficient for most use cases\nUse message() very sparingly, as usually R packages should not be too verbose during normal operation"
   },
   {
     "objectID": "index.html#corresponding-tests",
@@ -88,7 +102,7 @@
     "href": "index.html#where-i-found-llms-useful",
     "title": "Software Engineering Topics",
     "section": "Where I found LLMs useful",
-    "text": "Where I found LLMs useful\n\nApplied statistical analyses reports\n\nRead data, summarize hypotheses, fit models, generate ggplot2 plots, write conclusion\nImportant: Write what you think into your Quarto doc, only then the LLM has a chance to understand the context and help you best\n\nVery precise code generation, e.g. “I have this string and want to deparse it into … please give me the function code”\nImage recognition from math formula screenshots to generate LaTeX code\nGitHub Co-Pilot code review to find small problems incl. typos"
+    "text": "Where I found LLMs useful\n\nApplied statistical analyses reports\n\nRead data, summarize hypotheses, fit models, generate ggplot2 plots, write conclusion\nImportant: Write what you think into your Quarto doc, only then the LLM has a chance to understand the context and help you best\n\nVery precise code generation, e.g. “I have this string and want to deparse it into … please give me the function code”\nImage recognition from math formula screenshots to generate LaTeX code\nGitHub Co-Pilot code review to find small problems incl. typos\nGenerate roxygen2 documentation from function code (here also assertions help to guess the type for documentation)"
   },
   {
     "objectID": "index.html#where-i-was-disappointed-by-llms",
@@ -109,6 +123,6 @@
     "href": "index.html#thank-you-questions",
     "title": "Software Engineering Topics",
     "section": "Thank you! Questions?",
-    "text": "Thank you! Questions?"
+    "text": "Thank you! Questions?\n\nThese slides are at danielinteractive.github.io/merck-eng"
   }
 ]

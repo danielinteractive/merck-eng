@@ -87,6 +87,10 @@ NULL
   - has been my personal choice for a few years now
 - In Python: [`Pydantic`](https://docs.pydantic.dev/) helps verify input data coming into fully type annotated Python programs.
 
+## Type assertions: packages (cont'd)
+
+- In Python: [`Pydantic`](https://docs.pydantic.dev/) helps verify input data coming into fully type annotated Python programs.
+
 ## Type documentation
 
 - Going hand in hand with type assertions is type documentation.
@@ -138,6 +142,9 @@ NULL
   ```
 - Otherwise debugging becomes more difficult
   - I found myself manually disabling such statements via `fixInNamespace()` to be able to debug the code successfully
+
+## Error handling (cont'd)
+
 - Basic `stop()` and `warning()` functions are sufficient for most use cases
 - Use `message()` very sparingly, as usually R packages should not be too verbose during normal operation
 
@@ -184,6 +191,7 @@ Please see [here](https://rconis.github.io/workshop-r-swe-zrh/slides/07_shiny.ht
 - Very precise code generation, e.g. "I have this string and want to deparse it into ... please give me the function code"
 - Image recognition from math formula screenshots to generate LaTeX code
 - GitHub Co-Pilot code review to find small problems incl. typos
+- Generate `roxygen2` documentation from function code (here also assertions help to guess the type for documentation)
 
 ## Where I was disappointed by LLMs
 
@@ -206,3 +214,5 @@ Please see [here](https://rconis.github.io/workshop-r-swe-zrh/slides/07_shiny.ht
 ## Thank you! Questions?
 
 ![](resources/RCONIS_logo.png){height="500"}
+
+These slides are at [danielinteractive.github.io/merck-eng](https://danielinteractive.github.io/merck-eng/)

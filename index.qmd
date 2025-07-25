@@ -85,7 +85,6 @@ NULL
   - little disadvantage: does not easily allow custom error messages
   - see [vignette](https://cran.r-project.org/web/packages/checkmate/vignettes/checkmate.html) for details
   - has been my personal choice for a few years now
-- In Python: [`Pydantic`](https://docs.pydantic.dev/) helps verify input data coming into fully type annotated Python programs.
 
 ## Type assertions: packages (cont'd)
 
@@ -121,7 +120,7 @@ NULL
   #' @typedreturn: number
   #'   Average coordinate.
   ```
-- Output format in the `.md` file can be configured centrally in the `DESCRIPTION` file, e.g.:
+- Output format in the `.md` file can be configured centrally in the `DESCRIPTION` file, e.g.:\
   ``Config/roxytypes: list(format = "(`{type}`)\cr {description}")``
 - Conversion utility to convert existing `roxygen2` documentation to typed parameter tags.
 

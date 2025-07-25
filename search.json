@@ -39,7 +39,7 @@
     "href": "index.html#type-assertions-packages",
     "title": "Software Engineering Topics",
     "section": "Type assertions: packages",
-    "text": "Type assertions: packages\n\nassertthat: simple assertions, e.g. assert_that(is.numeric(x))\n\npart of the tidyverse and written by Hadley Wickham\nlast CRAN update was 2019, so is not actively maintained\n\ncheckmate: more powerful assertions, e.g. assert_numeric(x, lower = 0, upper = 1)\n\nvery fast due to underlying C implementation\neasy to extend with custom assertions\nalso has the expect_* verbs for extending testthat functionality\nlittle disadvantage: does not easily allow custom error messages\nsee vignette for details\nhas been my personal choice for a few years now\n\nIn Python: Pydantic helps verify input data coming into fully type annotated Python programs."
+    "text": "Type assertions: packages\n\nassertthat: simple assertions, e.g. assert_that(is.numeric(x))\n\npart of the tidyverse and written by Hadley Wickham\nlast CRAN update was 2019, so is not actively maintained\n\ncheckmate: more powerful assertions, e.g. assert_numeric(x, lower = 0, upper = 1)\n\nvery fast due to underlying C implementation\neasy to extend with custom assertions\nalso has the expect_* verbs for extending testthat functionality\nlittle disadvantage: does not easily allow custom error messages\nsee vignette for details\nhas been my personal choice for a few years now"
   },
   {
     "objectID": "index.html#type-assertions-packages-contd",
@@ -67,7 +67,7 @@
     "href": "index.html#type-documentation-with-roxytypes",
     "title": "Software Engineering Topics",
     "section": "Type documentation with roxytypes",
-    "text": "Type documentation with roxytypes\n\nProvides typed parameter documentation tags for integration with roxygen2.\nTyped parameter tags provide a consistent interface for annotating expected types for parameters and returned values.\nExample:\n#' @typed x: numeric\n#'   coordinates.\n#' @typedreturn: number\n#'   Average coordinate.\nOutput format in the .md file can be configured centrally in the DESCRIPTION file, e.g.: Config/roxytypes: list(format = \"(`{type}`)\\cr {description}\")\nConversion utility to convert existing roxygen2 documentation to typed parameter tags."
+    "text": "Type documentation with roxytypes\n\nProvides typed parameter documentation tags for integration with roxygen2.\nTyped parameter tags provide a consistent interface for annotating expected types for parameters and returned values.\nExample:\n#' @typed x: numeric\n#'   coordinates.\n#' @typedreturn: number\n#'   Average coordinate.\nOutput format in the .md file can be configured centrally in the DESCRIPTION file, e.g.:\nConfig/roxytypes: list(format = \"(`{type}`)\\cr {description}\")\nConversion utility to convert existing roxygen2 documentation to typed parameter tags."
   },
   {
     "objectID": "index.html#error-handling",
